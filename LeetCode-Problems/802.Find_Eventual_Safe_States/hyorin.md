@@ -23,7 +23,7 @@ If the count becomes 0, it indicates that node becomes the terminal node, so we 
 ```swift
 class Solution {
     func eventualSafeNodes(_ graph: [[Int]]) -> [Int] {
-        var reserveGraph = Array(repeating: [Int](), count: graph.count)
+        var reversedGraph = Array(repeating: [Int](), count: graph.count)
         var outdegrees = Array(repeating: 0, count: graph.count)
         var queue = [Int]()
 
@@ -35,7 +35,7 @@ class Solution {
 
             outdegrees[index] = nodes.count
             for outNode in nodes {
-                reserveGraph[outNode].append(index)
+                reversedGraph[outNode].append(index)
             }
         }
 
@@ -44,7 +44,7 @@ class Solution {
             let node = queue.removeFirst()
             result.append(node)
 
-            for inNode in reserveGraph[node] {
+            for inNode in reversedGraph[node] {
                 outdegrees[inNode] -= 1
                 if outdegrees[inNode] == 0 {
                     queue.append(inNode)
